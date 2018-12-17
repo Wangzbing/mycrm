@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.GuaranteeItemMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.GuaranteeItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="guarantee_id" property="guaranteeId" jdbcType="BIGINT" />
+    <result column="repairTime" property="repairtime" jdbcType="DATE" />
+    <result column="employee_id" property="employeeId" jdbcType="BIGINT" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_guaranteeitem
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.GuaranteeItem" >
+    insert into t_guaranteeitem (id, guarantee_id, repairTime, 
+      employee_id, intro, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{guaranteeId,jdbcType=BIGINT}, #{repairtime,jdbcType=DATE}, 
+      #{employeeId,jdbcType=BIGINT}, #{intro,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.GuaranteeItem" >
+    update t_guaranteeitem
+    set guarantee_id = #{guaranteeId,jdbcType=BIGINT},
+      repairTime = #{repairtime,jdbcType=DATE},
+      employee_id = #{employeeId,jdbcType=BIGINT},
+      intro = #{intro,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, guarantee_id, repairTime, employee_id, intro, status
+    from t_guaranteeitem
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, guarantee_id, repairTime, employee_id, intro, status
+    from t_guaranteeitem
+  </select>
+</mapper>

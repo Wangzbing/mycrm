@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.OrderItemMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.OrderItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="deviceType_id" property="devicetypeId" jdbcType="BIGINT" />
+    <result column="unitType_id" property="unittypeId" jdbcType="BIGINT" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_orderitem
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.OrderItem" >
+    insert into t_orderitem (id, order_id, deviceType_id, 
+      unitType_id, number, intro, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{devicetypeId,jdbcType=BIGINT}, 
+      #{unittypeId,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}, #{intro,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.OrderItem" >
+    update t_orderitem
+    set order_id = #{orderId,jdbcType=BIGINT},
+      deviceType_id = #{devicetypeId,jdbcType=BIGINT},
+      unitType_id = #{unittypeId,jdbcType=BIGINT},
+      number = #{number,jdbcType=INTEGER},
+      intro = #{intro,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, order_id, deviceType_id, unitType_id, number, intro, status
+    from t_orderitem
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, order_id, deviceType_id, unitType_id, number, intro, status
+    from t_orderitem
+  </select>
+</mapper>

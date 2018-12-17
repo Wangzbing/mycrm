@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.EmployeeMapper" >
+
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.Employee" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="inputTime" property="inputtime" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <association property="department" javaType="org.amin.crm.domain.Department" column="dept_id">
+      <id column="did" property="id"></id>
+      <id column="dname" property="name"></id>
+    </association>
+  </resultMap>
+
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_employee
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="org.amin.crm.domain.Employee" >
+    insert into t_employee (id, username, password, 
+      realName, tel, email, 
+      inputTime, status, dept_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{inputtime,jdbcType=DATE}, #{status,jdbcType=INTEGER}, #{department.id}
+      )
+  </insert>
+
+  <update id="update" parameterType="org.amin.crm.domain.Employee">
+    update t_employee
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      realName = #{realname,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      inputTime = #{inputtime,jdbcType=DATE},
+      status = #{status,jdbcType=INTEGER},
+      dept_id = #{department.id}
+    where id=#{id}
+  </update>
+
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select *
+    from t_employee
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select e.* ,d.id as did,d.name as dname
+    from t_employee e left join t_department d on e.dept_id = d.id
+  </select>
+  <sql id="querySql">
+    <where>
+      <!--<if test="searchKey!=null and searchKey!=''">
+        (username like #{searchKey} or realName like #{searchKey}
+        or tel like #{searchKey} or email like #{searchKey})
+      </if>
+      <if test="status!=null">
+        and e.status=#{status}
+      </if>
+      <if test="inputTimeStart!=null and inputTimeStart!=''">
+        and e.inputTime >= #{inputTimeStart}
+      </if>
+      <if test="inputTimeEnd!=null and inputTimeEnd!=''">
+        and e.inputTime &lt;= #{inputTimeEnd}
+      </if>-->
+      <!--<if test="username!=null and username!=''">
+        and username like concat('%',#{username},'%')
+      </if>-->
+      <if test="realName!=null and realName!=''">
+        and realName like concat('%',#{realName},'%')
+      </if>
+   <!--   <if test="tel!=null and tel!=''">
+        and tel like concat('%',#{tel},'%')
+      </if>
+      <if test="email!=null and email!=''">
+        and email like concat('%',#{email},'%')
+      </if>-->
+      <if test="department_id!=null and department_id!=''">
+        and d.id=#{department_id}
+      </if>
+    </where>
+  </sql>
+  <select id="findByQuery" resultMap="BaseResultMap" parameterType="org.amin.crm.query.BaseQuery">
+    select e.* ,d.id as did,d.name as dname
+    from t_employee e left join t_department d on e.dept_id = d.id
+    <include refid="querySql" />
+  </select>
+  <!--员工离职-->
+  <update id="left" parameterType="java.lang.Long">
+    update t_employee set status=-1 where id=#{id}
+  </update>
+
+  <update id="rework" parameterType="java.lang.Long">
+    update t_employee set status=1 where id=#{id}
+  </update>
+
+  <select id="findByUserName" parameterType="string" resultMap="BaseResultMap">
+    select * from t_employee where t_employee.username=#{username}
+  </select>
+
+</mapper>

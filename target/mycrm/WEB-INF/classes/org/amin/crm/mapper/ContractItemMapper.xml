@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.ContractItemMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.ContractItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="contract_id" property="contractId" jdbcType="BIGINT" />
+    <result column="payTime" property="paytime" jdbcType="DATE" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="scale" property="scale" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_contractitem
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.ContractItem" >
+    insert into t_contractitem (id, contract_id, payTime, 
+      money, scale, intro, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{contractId,jdbcType=BIGINT}, #{paytime,jdbcType=DATE}, 
+      #{money,jdbcType=DECIMAL}, #{scale,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.ContractItem" >
+    update t_contractitem
+    set contract_id = #{contractId,jdbcType=BIGINT},
+      payTime = #{paytime,jdbcType=DATE},
+      money = #{money,jdbcType=DECIMAL},
+      scale = #{scale,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, contract_id, payTime, money, scale, intro, status
+    from t_contractitem
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, contract_id, payTime, money, scale, intro, status
+    from t_contractitem
+  </select>
+</mapper>

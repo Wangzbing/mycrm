@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.Order" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="signTime" property="signtime" jdbcType="DATE" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="sum" property="sum" jdbcType="DECIMAL" />
+    <result column="totalAmount" property="totalamount" jdbcType="DECIMAL" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="deviceType_id" property="devicetypeId" jdbcType="BIGINT" />
+    <result column="unitType_id" property="unittypeId" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.Order" >
+    insert into t_order (id, sn, customer_id, 
+      signTime, seller_id, sum, 
+      totalAmount, intro, status, 
+      deviceType_id, unitType_id)
+    values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, 
+      #{signtime,jdbcType=DATE}, #{sellerId,jdbcType=BIGINT}, #{sum,jdbcType=DECIMAL}, 
+      #{totalamount,jdbcType=DECIMAL}, #{intro,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{devicetypeId,jdbcType=BIGINT}, #{unittypeId,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.Order" >
+    update t_order
+    set sn = #{sn,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      signTime = #{signtime,jdbcType=DATE},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      sum = #{sum,jdbcType=DECIMAL},
+      totalAmount = #{totalamount,jdbcType=DECIMAL},
+      intro = #{intro,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      deviceType_id = #{devicetypeId,jdbcType=BIGINT},
+      unitType_id = #{unittypeId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, sn, customer_id, signTime, seller_id, sum, totalAmount, intro, status, 
+    deviceType_id, unitType_id
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, sn, customer_id, signTime, seller_id, sum, totalAmount, intro, status, 
+    deviceType_id, unitType_id
+    from t_order
+  </select>
+
+  <select id="findByQuery" resultMap="BaseResultMap" parameterType="org.amin.crm.query.BaseQuery">
+    select * from t_order
+  </select>
+</mapper>

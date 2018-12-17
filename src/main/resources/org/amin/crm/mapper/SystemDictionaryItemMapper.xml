@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.SystemDictionaryItemMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.SystemDictionaryItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="type_id" property="type.id"></result>
+    <result column="tname" property="type.name"></result>
+  </resultMap>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_systemdictionaryitem
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.SystemDictionaryItem" >
+    insert into t_systemdictionaryitem (id, name, sequence, 
+      status, intro, type_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{intro,jdbcType=VARCHAR}, #{type.id}
+      )
+  </insert>
+  <update id="update" parameterType="org.amin.crm.domain.SystemDictionaryItem" >
+    update t_systemdictionaryitem
+    set name = #{name,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      intro = #{intro,jdbcType=VARCHAR},
+      type_id = #{type.id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, sequence, status, intro, type_id
+    from t_systemdictionaryitem
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select id, name, sequence, status, intro, type_id
+    from t_systemdictionaryitem
+  </select>
+
+  <select id="findByQuery" resultMap="BaseResultMap" parameterType="org.amin.crm.query.BaseQuery">
+    select ti.* ,tt.name as tname from t_systemdictionaryitem ti left join t_systemdictionarytype tt on ti.type_id = tt.id
+    <where>
+      <if test="type!=null">
+        and ti.type_Id=#{type}
+      </if>
+    </where>
+  </select>
+  
+
+  <update id="left" parameterType="java.lang.Long">
+    update t_systemdictionaryitem set status=-1 where id=#{id}
+  </update>
+
+  <update id="rework" parameterType="java.lang.Long">
+    update t_systemdictionaryitem set status=1 where id=#{id}
+  </update>
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.SystemDictionaryTypeMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.SystemDictionaryType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_systemdictionarytype
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.SystemDictionaryType" >
+    insert into t_systemdictionarytype (id, name, sn, 
+      intro)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, 
+      #{intro,jdbcType=VARCHAR})
+  </insert>
+  <update id="update" parameterType="org.amin.crm.domain.SystemDictionaryType" >
+    update t_systemdictionarytype
+    set name = #{name,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR}
+
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, sn, intro
+    from t_systemdictionarytype
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select id, name, sn, intro
+    from t_systemdictionarytype
+  </select>
+  <select id="findByQuery" resultMap="BaseResultMap" parameterType="org.amin.crm.query.BaseQuery">
+    select * from t_systemdictionarytype
+  </select>
+</mapper>

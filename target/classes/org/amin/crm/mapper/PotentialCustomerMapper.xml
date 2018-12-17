@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.PotentialCustomerMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.PotentialCustomer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="linkMan" property="linkman" jdbcType="VARCHAR" />
+    <result column="linkManTel" property="linkmantel" jdbcType="VARCHAR" />
+    <result column="inputTime" property="inputtime" jdbcType="DATE" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="successRate" property="successrate" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="customerSource_id" property="customersourceId" jdbcType="BIGINT" />
+    <result column="inputUser_id" property="inputuserId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_potentialcustomer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.PotentialCustomer" >
+    insert into t_potentialcustomer (id, name, age, 
+      sex, linkMan, linkManTel, 
+      inputTime, intro, successRate, 
+      status, customerSource_id, inputUser_id, 
+      seller_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{sex,jdbcType=BIT}, #{linkman,jdbcType=VARCHAR}, #{linkmantel,jdbcType=VARCHAR}, 
+      #{inputtime,jdbcType=DATE}, #{intro,jdbcType=VARCHAR}, #{successrate,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{customersourceId,jdbcType=BIGINT}, #{inputuserId,jdbcType=BIGINT}, 
+      #{sellerId,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.PotentialCustomer" >
+    update t_potentialcustomer
+    set name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=BIT},
+      linkMan = #{linkman,jdbcType=VARCHAR},
+      linkManTel = #{linkmantel,jdbcType=VARCHAR},
+      inputTime = #{inputtime,jdbcType=DATE},
+      intro = #{intro,jdbcType=VARCHAR},
+      successRate = #{successrate,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      customerSource_id = #{customersourceId,jdbcType=BIGINT},
+      inputUser_id = #{inputuserId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, age, sex, linkMan, linkManTel, inputTime, intro, successRate, status, 
+    customerSource_id, inputUser_id, seller_id
+    from t_potentialcustomer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, age, sex, linkMan, linkManTel, inputTime, intro, successRate, status, 
+    customerSource_id, inputUser_id, seller_id
+    from t_potentialcustomer
+  </select>
+</mapper>

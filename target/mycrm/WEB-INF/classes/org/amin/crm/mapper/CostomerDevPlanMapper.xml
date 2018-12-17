@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.CostomerDevPlanMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.CostomerDevPlan" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="planTime" property="plantime" jdbcType="DATE" />
+    <result column="planSubject" property="plansubject" jdbcType="VARCHAR" />
+    <result column="planDetails" property="plandetails" jdbcType="VARCHAR" />
+    <result column="inputTime" property="inputtime" jdbcType="DATE" />
+    <result column="pote_id" property="poteId" jdbcType="BIGINT" />
+    <result column="inputUser_id" property="inputuserId" jdbcType="BIGINT" />
+    <result column="planType_id" property="plantypeId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_customerdevplan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.CostomerDevPlan" >
+    insert into t_customerdevplan (id, planTime, planSubject, 
+      planDetails, inputTime, pote_id, 
+      inputUser_id, planType_id, seller_id, 
+      result)
+    values (#{id,jdbcType=BIGINT}, #{plantime,jdbcType=DATE}, #{plansubject,jdbcType=VARCHAR}, 
+      #{plandetails,jdbcType=VARCHAR}, #{inputtime,jdbcType=DATE}, #{poteId,jdbcType=BIGINT}, 
+      #{inputuserId,jdbcType=BIGINT}, #{plantypeId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, 
+      #{result,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.CostomerDevPlan" >
+    update t_customerdevplan
+    set planTime = #{plantime,jdbcType=DATE},
+      planSubject = #{plansubject,jdbcType=VARCHAR},
+      planDetails = #{plandetails,jdbcType=VARCHAR},
+      inputTime = #{inputtime,jdbcType=DATE},
+      pote_id = #{poteId,jdbcType=BIGINT},
+      inputUser_id = #{inputuserId,jdbcType=BIGINT},
+      planType_id = #{plantypeId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      result = #{result,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, planTime, planSubject, planDetails, inputTime, pote_id, inputUser_id, 
+    planType_id, seller_id, result
+    from t_customerdevplan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, planTime, planSubject, planDetails, inputTime, pote_id, inputUser_id, 
+    planType_id, seller_id, result
+    from t_customerdevplan
+  </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.ContractMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.Contract" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="signTime" property="signtime" jdbcType="DATE" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="sum" property="sum" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.Contract" >
+    insert into t_contract (id, sn, customer_id, 
+      signTime, seller_id, sum, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{customerId,jdbcType=BIGINT}, 
+      #{signtime,jdbcType=DATE}, #{sellerId,jdbcType=BIGINT}, #{sum,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.Contract" >
+    update t_contract
+    set sn = #{sn,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      signTime = #{signtime,jdbcType=DATE},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      sum = #{sum,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, sn, customer_id, signTime, seller_id, sum, status
+    from t_contract
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, sn, customer_id, signTime, seller_id, sum, status
+    from t_contract
+  </select>
+</mapper>

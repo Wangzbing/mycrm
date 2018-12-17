@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.Department" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="dirPath" property="dirpath" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+
+    <result column="eid" property="manager.id"  />
+    <result column="ename" property="manager.realname"  />
+
+    <result column="cid" property="children.id"/>
+    <result column="cname" property="children.name"/>
+
+  </resultMap>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from t_department
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.Department" >
+    insert into t_department (id, name, sn, 
+      dirPath, status, manager_id, 
+      parent_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, 
+      #{dirpath,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{managerId,jdbcType=BIGINT}, 
+      #{parentId,jdbcType=BIGINT})
+  </insert>
+  <update id="update" parameterType="org.amin.crm.domain.Department" >
+    update t_department
+    set name = #{name,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=VARCHAR},
+      dirPath = #{dirpath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      manager_id = #{managerId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, sn, dirPath, status, manager_id, parent_id
+    from t_department
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select id, name, sn, dirPath, status, manager_id, parent_id
+    from t_department
+  </select>
+
+  <select id="findDeptTree" resultMap="DepartmentResultMapWithChildren">
+    SELECT
+      parent.id,
+      parent.NAME,
+      child.id cid,
+      child.NAME cname
+    FROM
+      t_department parent
+      LEFT JOIN t_department child ON ( parent.id = child.parent_id )
+    WHERE
+      parent.parent_id IS NULL
+  </select>
+
+  <resultMap type="org.amin.crm.domain.Department" id="DepartmentResultMapWithChildren">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <!-- 子部门 -->
+    <collection property="children" ofType="org.amin.crm.domain.Department">
+      <id column="cid" property="id" />
+      <result column="cname" property="name" />
+    </collection>
+  </resultMap>
+
+  <!--分页查询-->
+  <select id="findByQuery" resultMap="BaseResultMap" parameterType="org.amin.crm.query.BaseQuery">
+    SELECT
+      parent.*,
+      child.id cid,
+      child.NAME cname
+    FROM
+      t_department parent
+      LEFT JOIN t_department child ON ( parent.id = child.parent_id )
+    WHERE
+      parent.parent_id IS NULL
+  </select>
+
+</mapper>

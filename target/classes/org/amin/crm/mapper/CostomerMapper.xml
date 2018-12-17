@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amin.crm.mapper.CostomerMapper" >
+  <resultMap id="BaseResultMap" type="org.amin.crm.domain.Costomer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="BIGINT" />
+    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="inputTime" property="inputtime" jdbcType="DATE" />
+    <result column="inputUser_id" property="inputuserId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="job_id" property="jobId" jdbcType="BIGINT" />
+    <result column="salaryLevel_id" property="salarylevelId" jdbcType="BIGINT" />
+    <result column="customerSource_id" property="customersourceId" jdbcType="BIGINT" />
+    <result column="customerStatus_id" property="customerstatusId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="pool" property="pool" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.amin.crm.domain.Costomer" >
+    insert into t_customer (id, name, contacts, 
+      age, sex, tel, email, 
+      qq, wechat, inputTime, 
+      inputUser_id, seller_id, job_id, 
+      salaryLevel_id, customerSource_id, customerStatus_id, 
+      status, pool)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
+      #{age,jdbcType=BIGINT}, #{sex,jdbcType=BIT}, #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{inputtime,jdbcType=DATE}, 
+      #{inputuserId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{jobId,jdbcType=BIGINT}, 
+      #{salarylevelId,jdbcType=BIGINT}, #{customersourceId,jdbcType=BIGINT}, #{customerstatusId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{pool,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.amin.crm.domain.Costomer" >
+    update t_customer
+    set name = #{name,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      age = #{age,jdbcType=BIGINT},
+      sex = #{sex,jdbcType=BIT},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      inputTime = #{inputtime,jdbcType=DATE},
+      inputUser_id = #{inputuserId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      job_id = #{jobId,jdbcType=BIGINT},
+      salaryLevel_id = #{salarylevelId,jdbcType=BIGINT},
+      customerSource_id = #{customersourceId,jdbcType=BIGINT},
+      customerStatus_id = #{customerstatusId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      pool = #{pool,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, name, contacts, age, sex, tel, email, qq, wechat, inputTime, inputUser_id, 
+    seller_id, job_id, salaryLevel_id, customerSource_id, customerStatus_id, status, 
+    pool
+    from t_customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, contacts, age, sex, tel, email, qq, wechat, inputTime, inputUser_id, 
+    seller_id, job_id, salaryLevel_id, customerSource_id, customerStatus_id, status, 
+    pool
+    from t_customer
+  </select>
+</mapper>
